@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name" translatable="false">Parkin1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="location_icon">Location Icon</string>
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="permissions">Permissions</string>
+    <string name="others">Others</string>
+    <string name="account">Account</string>
+    <string name="profile">Profile</string>
+    <string name="saved_address">Saved Address</string>
+    <string name="offers">Offers</string>
+    <string name="promos">Promos</string>
+    <string name="refer_and_get_discounts">Refer And Get Discounts</string>
+    <string name="language">Language</string>
+    <string name="language_button">Change Language</string>
+    <string name="version_1_1_1_1">Version 1.1.1.1</string>
+    <string name="button">Button</string>
+    <string name="location_1">Location 1</string>
+    <string name="your_current_location">Your current location</string>
+    <string name="location">Location</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="don_t_have_account_signup">Don\'t have account? Signup</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="change_language">Change Language</string>
+    <string name="apply_promo">Apply Promo</string>
+    <string name="add_promo">Add Promo</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+    <string name="promos1">Promos</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="invite_on_parking">Invite on Parking</string>
+    <string name="share_this_code">Share this code</string>
+    <string name="invite">Invite</string>
+    <string name="share_this_code_with_one_of_your_friend_amp_family_member_they_can_apply_it_as_promo_code_on_their_first_bike_or_car_parking_both_of_them_will_get_an_amazing_discount"><![CDATA[Share this code with one of your friend & family member.They can apply it as Promo code on their first Bike or Car parking.Both of them will get an amazing discount.]]></string>
+    <string name="get_discounts">Get Discounts</string>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Nepali</item>
+    </string-array>
+
+</resources>

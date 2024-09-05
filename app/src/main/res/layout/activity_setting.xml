@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingActivity"
+    android:background="@drawable/gradient">
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+   <FrameLayout
+       android:id="@+id/frameLayout"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       app:layout_constraintBottom_toTopOf="@+id/btn1"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+   <ImageButton
+       android:id="@+id/btn1"
+       android:layout_width="77dp"
+       android:layout_height="49dp"
+       android:layout_marginStart="16dp"
+       android:layout_marginBottom="15dp"
+       android:background="#003A7CA5"
+       android:contentDescription="email"
+       android:src="@drawable/group_62revarrow"
+       android:visibility="visible"
+       app:layout_constraintBottom_toTopOf="@+id/button"
+       app:layout_constraintEnd_toStartOf="@+id/textView"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+
+   <TextView
+       android:id="@+id/textView"
+       android:layout_width="307dp"
+       android:layout_height="47dp"
+       android:layout_marginEnd="11dp"
+       android:clickable="false"
+       android:contextClickable="false"
+       android:text="@string/settings"
+       android:textColorLink="#120101"
+       android:textSize="30sp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toEndOf="@+id/btn1"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.002" />
+
+   <com.google.android.material.appbar.MaterialToolbar
+       android:id="@+id/materialToolbar"
+       android:layout_width="332dp"
+       android:layout_height="149dp"
+       android:background="@drawable/round_button"
+       android:clickable="false"
+       android:contextClickable="false"
+       android:minHeight="?attr/actionBarSize"
+       android:theme="?attr/actionBarTheme"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.493"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/button"
+       app:layout_constraintVertical_bias="0.029" />
+
+   <Button
+       android:id="@+id/button"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:background="@drawable/round_button"
+       android:drawableStart="@drawable/ic_noti_background"
+       android:drawablePadding="10dp"
+       android:padding="10dp"
+       android:text="@string/notifications"
+       android:textAlignment="textStart"
+       android:textAllCaps="false"
+       android:textColor="#5C6157"
+       android:textColorLink="#F2FFFFFF"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.493"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView"
+       app:layout_constraintVertical_bias="0.019" />
+
+   <com.google.android.material.appbar.MaterialToolbar
+       android:id="@+id/materialToolbar2"
+       android:layout_width="332dp"
+       android:layout_height="149dp"
+       android:background="@drawable/round_button"
+       android:minHeight="?attr/actionBarSize"
+       android:theme="?attr/actionBarTheme"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.532"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+       app:layout_constraintVertical_bias="0.027" />
+
+   <Button
+       android:id="@+id/button2"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:background="@drawable/round_button"
+       android:paddingLeft="25dp"
+       android:text="@string/language"
+       android:textColor="#5C6157"
+       android:textAllCaps="false"
+       android:textAlignment="textStart"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.493"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/materialToolbar2"
+       app:layout_constraintVertical_bias="0.03" />
+
+
+   <Button
+       android:id="@+id/button3"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:layout_marginTop="8dp"
+       android:background="@drawable/round_button"
+       android:paddingLeft="25dp"
+       android:text="@string/permissions"
+       android:textAlignment="textStart"
+       android:textAllCaps="false"
+       android:textColor="#5C6157"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.532"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+   <Button
+       android:id="@+id/button4"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:background="@drawable/round_button"
+       android:paddingLeft="25dp"
+       android:text="@string/others"
+       android:textAlignment="textStart"
+       android:textAllCaps="false"
+       android:textColor="#5C6157"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.531"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/button3"
+       app:layout_constraintVertical_bias="0.027" />
+
+   <TextView
+       android:id="@+id/textView2"
+       android:layout_width="59dp"
+       android:layout_height="23dp"
+       android:layout_marginStart="8dp"
+       android:background="#FFFFFF"
+       android:text="@string/account"
+       android:textColor="#5C6157"
+       app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+       app:layout_constraintStart_toStartOf="@+id/materialToolbar"
+       app:layout_constraintTop_toTopOf="@+id/materialToolbar"
+       app:layout_constraintVertical_bias="0.071" />
+
+   <Button
+       android:id="@+id/button5"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:layout_marginStart="4dp"
+       android:layout_marginEnd="32dp"
+       android:background="@drawable/round_button"
+       android:drawableStart="@drawable/ic_account_background"
+       android:drawablePadding="5dp"
+       android:outlineProvider="none"
+       android:padding="10dp"
+       android:text="@string/profile"
+       android:textAlignment="viewStart"
+       android:textAllCaps="false"
+       android:textColor="#5C6157"
+       android:visibility="visible"
+       app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+       app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
+       app:layout_constraintHorizontal_bias="0.111"
+       app:layout_constraintStart_toStartOf="@+id/materialToolbar"
+       app:layout_constraintTop_toTopOf="@+id/materialToolbar"
+       app:layout_constraintVertical_bias="0.369" />
+
+   <Button
+       android:id="@+id/button6"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:background="@drawable/round_button"
+       android:drawableStart="@drawable/ic_address_background"
+       android:drawablePadding="5dp"
+       android:outlineProvider="none"
+       android:padding="10dp"
+       android:text="@string/saved_address"
+       android:textAlignment="textStart"
+       android:textAllCaps="false"
+       android:textColor="#5C6157"
+       app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+       app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
+       app:layout_constraintHorizontal_bias="1.0"
+       app:layout_constraintStart_toStartOf="@+id/materialToolbar"
+       app:layout_constraintTop_toTopOf="@+id/materialToolbar"
+       app:layout_constraintVertical_bias="0.928" />
+
+   <TextView
+       android:id="@+id/textView3"
+       android:layout_width="59dp"
+       android:layout_height="23dp"
+       android:layout_marginStart="12dp"
+       android:text="@string/offers"
+       android:textColor="#5C6157"
+       app:layout_constraintBottom_toBottomOf="@+id/materialToolbar2"
+       app:layout_constraintStart_toStartOf="@+id/materialToolbar2"
+       app:layout_constraintTop_toTopOf="@+id/materialToolbar2"
+       app:layout_constraintVertical_bias="0.119" />
+
+   <Button
+       android:id="@+id/button7"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:background="@drawable/round_button"
+       android:outlineProvider="none"
+       android:paddingLeft="25dp"
+       android:text="@string/promos"
+       android:textAlignment="textStart"
+       android:textAllCaps="false"
+       android:textColor="#5C6157"
+       app:layout_constraintBottom_toBottomOf="@+id/materialToolbar2"
+       app:layout_constraintEnd_toEndOf="@+id/materialToolbar2"
+       app:layout_constraintHorizontal_bias="0.0"
+       app:layout_constraintStart_toStartOf="@+id/materialToolbar2"
+       app:layout_constraintTop_toTopOf="@+id/materialToolbar2"
+       app:layout_constraintVertical_bias="0.376" />
+
+   <Button
+       android:id="@+id/button8"
+       android:layout_width="332dp"
+       android:layout_height="48dp"
+       android:background="@drawable/round_button"
+       android:outlineProvider="none"
+       android:paddingLeft="25dp"
+       android:text="@string/refer_and_get_discounts"
+       android:textAlignment="textStart"
+       android:textAllCaps="false"
+       android:textColor="#5C6157"
+       app:layout_constraintBottom_toBottomOf="@+id/materialToolbar2"
+       app:layout_constraintEnd_toEndOf="@+id/materialToolbar2"
+       app:layout_constraintStart_toStartOf="@+id/materialToolbar2"
+       app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+   <ImageView
+       android:id="@+id/insta"
+       android:layout_width="44dp"
+       android:layout_height="33dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintEnd_toStartOf="@+id/facebook"
+       app:layout_constraintHorizontal_bias="0.5"
+       app:layout_constraintHorizontal_chainStyle="packed"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.828"
+       app:srcCompat="@drawable/insta" />
+
+   <ImageView
+       android:id="@+id/facebook"
+       android:layout_width="44dp"
+       android:layout_height="33dp"
+       android:layout_marginStart="12dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintEnd_toStartOf="@+id/inn"
+       app:layout_constraintHorizontal_bias="0.5"
+       app:layout_constraintStart_toEndOf="@+id/insta"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.828"
+       app:srcCompat="@drawable/fb" />
+
+   <ImageView
+       android:id="@+id/inn"
+       android:layout_width="44dp"
+       android:layout_height="33dp"
+       android:layout_marginStart="12dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintEnd_toStartOf="@+id/youtube"
+       app:layout_constraintHorizontal_bias="0.5"
+       app:layout_constraintStart_toEndOf="@+id/facebook"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.827"
+       app:srcCompat="@drawable/in" />
+
+   <ImageView
+       android:id="@+id/youtube"
+       android:layout_width="44dp"
+       android:layout_height="33dp"
+       android:layout_marginStart="12dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.5"
+       app:layout_constraintStart_toEndOf="@+id/inn"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.827"
+       app:srcCompat="@drawable/youtube" />
+
+   <TextView
+       android:id="@+id/textView6"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/version_1_1_1_1"
+       android:textAllCaps="false"
+       android:textColor="#16425b"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.509"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/facebook" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+   <com.google.android.material.bottomnavigation.BottomNavigationView
+       android:id="@+id/bottomNavigationView3"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom"
+       android:layout_alignParentBottom="true"
+       android:background="#3a7ca5"
+       app:itemIconSize="33dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+       app:menu="@menu/bottomnav_menu">
+
+   </com.google.android.material.bottomnavigation.BottomNavigationView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

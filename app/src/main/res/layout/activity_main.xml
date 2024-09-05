@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginpagebg"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="288dp"
+        android:layout_height="55dp"
+        android:background="@drawable/rounder_corner"
+        android:drawableLeft="@drawable/sharp_person_24"
+        android:drawablePadding="18dp"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:padding="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.289" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="288dp"
+        android:layout_height="55dp"
+        android:background="@drawable/rounder_corner"
+        android:drawableLeft="@drawable/outline_lock_24"
+        android:drawablePadding="18dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintVertical_bias="0.034" />
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bule_rectangel"
+        android:text="@string/login"
+        android:textColor="@color/text_shade"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.034" />
+
+    <TextView
+        android:id="@+id/forgotpass_btn"
+        android:layout_width="206dp"
+        android:layout_height="57dp"
+        android:clickable="true"
+        android:lineSpacingExtra="10sp"
+        android:padding="8dp"
+        android:text="@string/forgot_password"
+        android:textAlignment="center"
+        android:textColor="@color/text_shade"
+        android:textSize="17sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn"
+        app:layout_constraintVertical_bias="0.034" />
+
+    <TextView
+        android:id="@+id/signup_btn"
+        android:layout_width="300dp"
+        android:layout_height="56dp"
+        android:clickable="true"
+        android:lineSpacingExtra="10sp"
+        android:padding="8dp"
+        android:text="@string/don_t_have_account_signup"
+        android:textAlignment="center"
+        android:textColor="#2F6690"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgotpass_btn"
+        app:layout_constraintVertical_bias="0.995" />
+
+    <TextView
+        android:id="@+id/change_language_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:padding="8dp"
+        android:text="@string/change_language"
+        android:textColor="#2F6690"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgotpass_btn"
+        app:layout_constraintVertical_bias="0.996" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

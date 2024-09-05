@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/bottom_sheet_background"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_promo"
+        android:textSize="18sp"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/promoCodeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/promo_code"
+        android:paddingStart="10dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:background="@drawable/corner_curve"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:background="@drawable/corner_curve"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#d9dcd6"/>
+
+        <Button
+            android:id="@+id/applyPromoCodeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/apply"
+            android:textAllCaps="false"
+            android:background="@drawable/corner_curve"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#81c3d7"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondsignupActivity"
+    android:background="@drawable/signupbg2">
+    <ImageView
+        android:id="@+id/backarrow_signup2"
+        android:layout_width="52dp"
+        android:layout_height="49dp"
+        android:clickable="true"
+        android:contentDescription="NULL"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+    <EditText
+        android:id="@+id/phonenumber"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/rounder_corner"
+        android:drawableLeft="@drawable/outline_phone_android_24"
+        android:drawablePadding="18dp"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="text"
+        android:padding="18dp"
+        android:textColorHint="#A8A7A9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backarrow_signup2"
+        app:layout_constraintVertical_bias="0.042" />
+
+    <EditText
+        android:id="@+id/choose_password"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:padding="18dp"
+        android:drawablePadding="18dp"
+        android:background="@drawable/rounder_corner"
+        android:drawableLeft="@drawable/outline_lock_24"
+        android:hint="Choose Password"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phonenumber"
+        app:layout_constraintVertical_bias="0.0"
+        android:textColorHint="#A8A7A9"/>
+
+    <EditText
+        android:id="@+id/confirm_password"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:padding="18dp"
+        android:drawablePadding="18dp"
+        android:background="@drawable/rounder_corner"
+        android:drawableLeft="@drawable/outline_lock_24"
+        android:hint="Choose Password"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_password"
+        app:layout_constraintVertical_bias="0.0"
+        android:textColorHint="#A8A7A9"/>
+
+    <Button
+        android:id="@+id/signup_btn_signup2"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bule_rectangel"
+        android:text="Sign Up"
+        android:textColor="@color/text_shade"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

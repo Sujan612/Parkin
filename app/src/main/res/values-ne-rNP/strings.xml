@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">सेटिङ</string>
+    <string name="notifications">सूचनाहरू</string>
+    <string name="permissions">अनुमतिहरू</string>
+    <string name="others">अन्य</string>
+    <string name="account">खाता</string>
+    <string name="profile">प्रोफाइल</string>
+    <string name="saved_address">बचत गरिएको ठेगाना</string>
+    <string name="offers">प्रस्तावहरू</string>
+    <string name="promos">प्रोमोहरू</string>
+    <string name="language">भाषा</string>
+    <string name="Nepali">नेपाली</string>
+    <string name="English">अंग्रेजी</string>
+    <string name="refer_and_get_discounts">सन्दर्भ गर्नुहोस् र छुट प्राप्त गर्नुहोस्</string>
+    <string name="version_1_1_1_1">संस्करण १.१.१.१</string>
+    <string name="button">बटन</string>
+    <string name="location_1">स्थान १</string>
+    <string name="location_icon">Location Icon</string>
+    <string name="your_current_location">तपाईँको हालको स्थान</string>
+    <string name="location">स्थान</string>
+    <string name="username">प्रयोगकर्ता नाम</string>
+    <string name="password">पासवर्ड</string>
+    <string name="login">लगइन</string>
+    <string name="forgot_password">पासवर्ड बिर्सनुभयो?</string>
+    <string name="don_t_have_account_signup">खाता छैन? साइनअप गर्नुहोस्</string>
+    <string name="_1">१</string>
+    <string name="_2">२</string>
+    <string name="_3">३</string>
+    <string name="_4">४</string>
+    <string name="change_language">भाषा परिवर्तन गर्नुहोस्</string>
+    <string name="apply_promo">प्रोमो लागू गर्नुहोस्</string>
+    <string name="add_promo">प्रोमो थप्नुहोस्</string>
+    <string name="cancel">रद्द गर्नुहोस्</string>
+    <string name="apply">लागू गर्नुहोस्</string>
+    <string name="promos1">प्रोमोहरू</string>
+    <string name="promo_code">प्रोमो कोड</string>
+    <string name="share_this_code">यो सङ्केत साझेदारी गर्नुहोस्</string>
+    <string name="invite">निमन्त्रणा गर्नुहोस्</string>
+    <string name="share_this_code_with_one_of_your_friend_amp_family_member_they_can_apply_it_as_promo_code_on_their_first_bike_or_car_parking_both_of_them_will_get_an_amazing_discount"><![CDATA[यो कोड तपाईंको साथी र परिवारका सदस्यमध्ये एकसँग साझेदारी गर्नुहोस्। तिनीहरूले यसलाई आफ्नो पहिलो बाइक वा कार पार्किङमा प्रोमो कोडको रूपमा लागू गर्न सक्दछन्। यी दुवैले गजबको छुट पाउनेछन् ।]]></string>
+    <string name="get_discounts">छुट प्राप्त गर्नुहोस्</string>
+    <string name="invite_on_parking">पार्किङमा निमन्त्रणा</string>
+
+</resources>

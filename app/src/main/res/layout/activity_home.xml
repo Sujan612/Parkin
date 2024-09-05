@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".HomeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/parkin_logo"
+            android:layout_width="116dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/wholelogo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.108"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/home_text_location"
+            android:layout_width="346dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounder_corner"
+            android:drawablePadding="18dp"
+            android:gravity="left|center"
+            android:backgroundTint="#d9dcd6"
+            android:hint="@string/your_current_location"
+            android:padding="10dp"
+            android:textColor="#5C6157"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/baseline_location_on_24"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/parkin_logo" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="532dp"
+            android:layout_marginTop="160dp"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.062" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#3a7ca5"
+        app:itemIconSize="33dp"
+        app:menu="@menu/bottomnav_menu" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

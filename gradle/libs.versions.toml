@@ -1,0 +1,42 @@
+[versions]
+agp = "8.4.1"
+curved_bottom_navigation = "latest_version"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+activity = "1.9.0"
+constraintlayout = "2.1.4"
+materialVersion = "1.13.0-alpha03"
+composeThemeAdapter = "1.2.1"
+androidxMaterial = "1.2.1"
+playServicesTfliteAccelerationService = "16.0.0-beta01"
+designBottomnavigation = "28.0.0-alpha1"
+supportAnnotations = "28.0.0"
+kotlinCompilerEmbeddable = "1.3.61-dev-withExperimentalGoogleExtensions-20191127"
+googleGmsGoogleServices = "4.4.2"
+firebaseDatabase = "21.0.0"
+
+[libraries]
+curved_bottom_navigation = { module = "np.com.susanthapa:curved_bottom_navigation", version.ref = "curved_bottom_navigation" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+compose-theme-adapter = { group = "com.google.android.material", name = "compose-theme-adapter", version.ref = "composeThemeAdapter" }
+androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "androidxMaterial" }
+play-services-tflite-acceleration-service = { group = "com.google.android.gms", name = "play-services-tflite-acceleration-service", version.ref = "playServicesTfliteAccelerationService" }
+design-bottomnavigation = { group = "com.android.support", name = "design-bottomnavigation", version.ref = "designBottomnavigation" }
+support-annotations = { group = "com.android.support", name = "support-annotations", version.ref = "supportAnnotations" }
+kotlin-compiler-embeddable = { group = "org.jetbrains.kotlin", name = "kotlin-compiler-embeddable", version.ref = "kotlinCompilerEmbeddable" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+

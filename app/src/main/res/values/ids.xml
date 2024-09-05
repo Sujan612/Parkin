@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="locationNumber" type="id"></item>
+    <item name="locationName" type="id"></item>
+    <item name="locationAddress" type="id"></item>
+    <item name="locationDistance" type="id"></item>
+    <item name="locationPrice" type="id"></item>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".PromosActivity">
+
+    <TextView
+        android:id="@+id/promosTextView"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="100dp"
+
+        android:drawablePadding="15dp"
+android:textColorLink="#120101"
+        android:text="@string/promos1"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.059" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="15dp"
+        android:background="#003A7CA5"
+        android:contentDescription="email"
+        android:src="@drawable/group_62revarrow"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/promosTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.06"
+        app:srcCompat="@drawable/group_62revarrow"
+        tools:srcCompat="@drawable/group_62revarrow" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/button9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/promosTextView"
+
+        app:layout_constraintVertical_bias="0.5"
+        tools:srcCompat="@drawable/nopromo"
+        app:srcCompat="@drawable/nopromo"/>
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:backgroundTint="#3a7ca5"
+        android:text="@string/apply_promo"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.628" />
+
+
+    <!-- Add your UI elements for displaying promotions here -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
