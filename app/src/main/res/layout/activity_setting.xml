@@ -143,7 +143,7 @@
        android:layout_height="48dp"
        android:background="@drawable/round_button"
        android:paddingLeft="25dp"
-       android:text="@string/others"
+       android:text="@string/logout"
        android:textAlignment="textStart"
        android:textAllCaps="false"
        android:textColor="#5C6157"

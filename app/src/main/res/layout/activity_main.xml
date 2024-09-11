@@ -16,7 +16,7 @@
         android:drawableLeft="@drawable/sharp_person_24"
         android:drawablePadding="18dp"
         android:ems="10"
-        android:hint="@string/username"
+        android:hint="@string/username_gmail"
         android:inputType="text"
         android:padding="18dp"
         app:layout_constraintBottom_toBottomOf="parent"

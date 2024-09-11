@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AppInsightsSettings">
+    <option name="selectedTabId" value="Firebase Crashlytics" />
     <option name="tabSettings">
       <map>
         <entry key="Firebase Crashlytics">
@@ -9,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.parkin1" />
-                  <option name="mobileSdkAppId" value="1:131631052079:android:47465933febbed07ab5dda" />
-                  <option name="projectId" value="park-in-ff4c5" />
-                  <option name="projectNumber" value="131631052079" />
+                  <option name="mobileSdkAppId" value="1:272569208117:android:a8ba59489825fb51da507c" />
+                  <option name="projectId" value="parkin-ebab3" />
+                  <option name="projectNumber" value="272569208117" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

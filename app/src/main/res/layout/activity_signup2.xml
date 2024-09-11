@@ -71,7 +71,7 @@
         android:drawablePadding="18dp"
         android:background="@drawable/rounder_corner"
         android:drawableLeft="@drawable/outline_lock_24"
-        android:hint="Choose Password"
+        android:hint="Confirm Password"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

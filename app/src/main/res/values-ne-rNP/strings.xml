@@ -40,5 +40,7 @@
     <string name="share_this_code_with_one_of_your_friend_amp_family_member_they_can_apply_it_as_promo_code_on_their_first_bike_or_car_parking_both_of_them_will_get_an_amazing_discount"><![CDATA[यो कोड तपाईंको साथी र परिवारका सदस्यमध्ये एकसँग साझेदारी गर्नुहोस्। तिनीहरूले यसलाई आफ्नो पहिलो बाइक वा कार पार्किङमा प्रोमो कोडको रूपमा लागू गर्न सक्दछन्। यी दुवैले गजबको छुट पाउनेछन् ।]]></string>
     <string name="get_discounts">छुट प्राप्त गर्नुहोस्</string>
     <string name="invite_on_parking">पार्किङमा निमन्त्रणा</string>
+    <string name="username_gmail">प्रयोगकर्ता नाम/जीमेल</string>
+    <string name="logout">लगआउट</string>
 
 </resources>

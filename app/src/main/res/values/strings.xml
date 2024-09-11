@@ -40,6 +40,8 @@
     <string name="invite">Invite</string>
     <string name="share_this_code_with_one_of_your_friend_amp_family_member_they_can_apply_it_as_promo_code_on_their_first_bike_or_car_parking_both_of_them_will_get_an_amazing_discount"><![CDATA[Share this code with one of your friend & family member.They can apply it as Promo code on their first Bike or Car parking.Both of them will get an amazing discount.]]></string>
     <string name="get_discounts">Get Discounts</string>
+    <string name="username_gmail">Username/Gmail</string>
+    <string name="logout">Logout</string>
     <string-array name="languages">
         <item>English</item>
         <item>Nepali</item>
