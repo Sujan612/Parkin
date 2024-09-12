@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "272569208117",
+    "firebase_url": "https://parkin-ebab3-default-rtdb.firebaseio.com",
+    "project_id": "parkin-ebab3",
+    "storage_bucket": "parkin-ebab3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272569208117:android:a8ba59489825fb51da507c",
+        "android_client_info": {
+          "package_name": "com.example.parkin1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2lNzsZHYS6F-M8kjc4ZqOSRJ5yNI1F2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
