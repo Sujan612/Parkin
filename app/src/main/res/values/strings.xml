@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Parkin1</string>
+    <string name="app_name" translatable="false">Parkin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="location_icon">Location Icon</string>
     <string name="settings">Settings</string>
