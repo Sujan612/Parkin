@@ -26,9 +26,6 @@
             android:name=".OperatorActivity"
             android:exported="false" />
         <activity
-            android:name=".operator"
-            android:exported="false" />
-        <activity
             android:name=".DiscountActivity"
             android:exported="false" />
         <activity
