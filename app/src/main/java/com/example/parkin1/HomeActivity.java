@@ -84,8 +84,6 @@ public class HomeActivity extends BaseActivity{
 
         LocationAdapter adapter = new LocationAdapter(locationList);
         recyclerView.setAdapter(adapter);
-
-
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);

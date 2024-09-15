@@ -26,12 +26,13 @@ import com.google.firebase.database.ValueEventListener;
 
 public class cosmos_model extends AppCompatActivity {
 
-    private static final String location = "27.65618593181801, 85.3215688432409";
+    private static final String location = "27.65618593181801, 85.3215688432409";//cosmos ko lati,longitude
     private Button selectedButton = null;
     private boolean isColorChanged = false;
     private DatabaseReference databaseReference;
     private Runnable resetColorChangedTask;
     private Handler handler = new Handler();
+    private boolean isOperator = false;
 
 
     @Override
@@ -88,9 +89,13 @@ public class cosmos_model extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!isColorChanged) {
-                    selectedButton = (Button) view;
-                    selectedButton.setBackgroundResource(R.drawable.yes_border);
-                } else if (isColorChanged) {
+                    if (!isOperator) {
+                        selectedButton = (Button) view;
+                        selectedButton.setBackgroundResource(R.drawable.yes_border);
+                    } else {
+                        Toast.makeText(cosmos_model.this, "space is OCCUPIED", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
                     Toast.makeText(cosmos_model.this, "Already reserved one space!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -122,10 +127,14 @@ public class cosmos_model extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!isColorChanged && selectedButton != null) {
-                    selectedButton.setBackgroundColor(Color.YELLOW);
-                    isColorChanged = true;
-                    saveButtonState();
-                    scheduleColorChangeReset();
+                    if (!isOperator && "RED".equals(selectedButton.getTag())) {
+                        Toast.makeText(cosmos_model.this, "Operator cannot change the red button!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        selectedButton.setBackgroundColor(Color.YELLOW);
+                        isColorChanged = true;
+                        saveButtonState();
+                        scheduleColorChangeReset();
+                    }
                 }
             }
         });
@@ -150,6 +159,10 @@ public class cosmos_model extends AppCompatActivity {
             selectedButton.setBackgroundResource(R.drawable.yes_border);
             if (color.equals("YELLOW")) {
                 selectedButton.setBackgroundColor(Color.YELLOW);
+            }else if(color.equals("RED")){
+                selectedButton.setBackgroundColor(Color.RED);
+            }else{
+                selectedButton.setBackgroundColor(Color.TRANSPARENT);
             }
         }
         isColorChanged = isChanged;

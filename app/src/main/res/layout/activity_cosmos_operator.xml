@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".cosmos_model"
+    android:background="@drawable/gradient_bg">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="134dp"
+        android:layout_height="51dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/wholelogo" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="397dp"
+        android:layout_height="573dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/corner_curve"
+        app:tint="@color/grey" />
+
+    <Button
+        android:id="@+id/occupied_cosmos"
+        android:layout_width="158dp"
+        android:layout_height="57dp"
+        android:text="occupied"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/available_cosmsos"
+        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="0.333"
+        android:background="@drawable/rounder_corner"
+        app:backgroundTint="@color/StartColor"/>
+
+    <Button
+        android:id="@+id/available_cosmsos"
+        android:layout_width="158dp"
+        android:layout_height="57dp"
+        android:background="@drawable/rounder_corner"
+        android:backgroundTint="@color/StartColor"
+        android:text="Available"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.845"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="0.318" />
+
+    <Button
+        android:id="@+id/b_cosmos_1"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="B1"
+        android:textColor="@color/text_shade"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_2"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/b_cosmos_2"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="B2"
+        android:textColor="@color/text_shade"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/b_cosmos_3"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="b3"
+        android:textColor="@color/text_shade"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_4"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/b_cosmos_4"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="b4"
+        android:textColor="@color/text_shade"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_5"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/b_cosmos_5"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="b5"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_6"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/b_cosmos_6"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="b6"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/b_cosmos_7"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="b7"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_8"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/b_cosmos_8"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="b8"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toTopOf="@+id/b_cosmos_9"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/b_cosmos_9"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="b9"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/c_cosmos_1"
+        android:layout_width="170dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="457dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="C1"
+        android:textColor="@color/text_shade"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.785"
+        app:layout_constraintStart_toEndOf="@+id/b_cosmos_1"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/c_cosmos_2"
+        android:layout_width="170dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="319dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="c2"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.785"
+        app:layout_constraintStart_toEndOf="@+id/b_cosmos_3"
+        app:layout_constraintTop_toBottomOf="@+id/c_cosmos_1" />
+
+    <Button
+        android:id="@+id/c_cosmos_3"
+        android:layout_width="170dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="181dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="c3"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.785"
+        app:layout_constraintStart_toEndOf="@+id/b_cosmos_6"
+        app:layout_constraintTop_toBottomOf="@+id/c_cosmos_2" />
+
+    <Button
+        android:id="@+id/c_cosmos_4"
+        android:layout_width="170dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/EndColor"
+        android:text="c4"
+        android:textSize="20sp"
+        android:textColor="@color/text_shade"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.785"
+        app:layout_constraintStart_toEndOf="@+id/b_cosmos_8"
+        app:layout_constraintTop_toBottomOf="@+id/c_cosmos_3"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
