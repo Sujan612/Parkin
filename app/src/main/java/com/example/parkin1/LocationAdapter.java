@@ -12,8 +12,8 @@ import java.util.List;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> {
 
-    private List<CustomLocation> locationList;
-    private OnItemClickListener onItemClickListener; // Declare the click listener interface
+    private final List<CustomLocation> locationList;
+    private final OnItemClickListener onItemClickListener; // Declare the click listener interface
 
     // Constructor to accept the list of CustomLocation objects and the click listener
     public LocationAdapter(List<CustomLocation> locationList, OnItemClickListener listener) {
@@ -31,7 +31,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     @Override
     public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
         CustomLocation location = locationList.get(position);
-        holder.locationNumber.setText(location.getNumber());
+        holder.locationNumber.setText(location.getNumber()); // Make sure CustomLocation has getNumber method
         holder.locationName.setText(location.getName());
         holder.locationAddress.setText(location.getAddress());
         holder.locationDistance.setText(location.getDistance());

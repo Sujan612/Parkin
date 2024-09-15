@@ -145,7 +145,7 @@ public class SecondsignupActivity extends BaseActivity {
                         if (user != null) {
                             // Store additional user details in Realtime Database
                             String userId = user.getUid();
-                            User newUser = new User(firstName, lastName, email, address, phone, password, "user"); // Set default role as "user"
+                            User newUser = new User(firstName, lastName, email, address, phone, password, "user", ""); // Default work to empty
 
                             databaseReference.child(userId).setValue(newUser).addOnCompleteListener(task1 -> {
                                 if (task1.isSuccessful()) {
@@ -166,6 +166,7 @@ public class SecondsignupActivity extends BaseActivity {
                 });
     }
 
+
     // Listener interface for uniqueness checks
     interface OnUniqueCheckListener {
         void onCheckComplete(boolean isUnique);
@@ -173,13 +174,13 @@ public class SecondsignupActivity extends BaseActivity {
 
     // User model class
     public static class User {
-        public String firstName, lastName, email, address, phone, password, role; // Add role field
+        public String firstName, lastName, email, address, phone, password, role, work;
 
         public User() {
             // Default constructor required for calls to DataSnapshot.getValue(User.class)
         }
 
-        public User(String firstName, String lastName, String email, String address, String phone, String password, String role) {
+        public User(String firstName, String lastName, String email, String address, String phone, String password, String role, String work) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
@@ -187,6 +188,7 @@ public class SecondsignupActivity extends BaseActivity {
             this.phone = phone;
             this.password = password;
             this.role = role; // Set the user's role
+            this.work = work; // Set the user's work
         }
     }
 }

@@ -1,11 +1,13 @@
 package com.example.parkin1;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,7 +55,10 @@ public class cosmos_operator extends AppCompatActivity {
 
         // Occupied and Available buttons
         Button occupied = findViewById(R.id.occupied_cosmos);
-        Button available = findViewById(R.id.available_cosmsos);
+        Button available = findViewById(R.id.available_cosmos);
+
+        // Settings button
+        ImageButton settingsButton = findViewById(R.id.imageButton);
 
         // Firebase sync
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -126,6 +131,11 @@ public class cosmos_operator extends AppCompatActivity {
                 }
             }
         });
+
+        // Settings button click listener
+        settingsButton.setOnClickListener(v -> {
+            startActivity(new Intent(cosmos_operator.this, SettingActivity.class));
+        });
     }
 
     private void saveButtonState(String color) {
@@ -139,17 +149,17 @@ public class cosmos_operator extends AppCompatActivity {
 
     private void restoreButtonState(String selectedButtonId, String color, boolean isChanged) {
         deselectPreviousButton();
-        @SuppressLint("DiscouragedApi") int resId = getResources().getIdentifier(selectedButtonId, "id", getPackageName());
+        int resId = getResources().getIdentifier(selectedButtonId, "id", getPackageName());
         selectedButton = findViewById(resId);
         if (selectedButton != null) {
             selectedButton.setBackgroundResource(R.drawable.yes_border);
             if(color.equals("RED")) {
                 selectedButton.setBackgroundColor(Color.RED);
                 selectedButton.setTag("red"); // Mark as occupied
-            }else if (color.equals("YELLOW")) {
+            } else if (color.equals("YELLOW")) {
                 selectedButton.setBackgroundColor(Color.YELLOW);
                 selectedButton.setTag("yellow");
-            }else if(color.equals("TRANSPARENT")) {
+            } else if(color.equals("TRANSPARENT")) {
                 selectedButton.setBackgroundColor(Color.TRANSPARENT);
                 selectedButton.setTag(""); // Clear tag
             }

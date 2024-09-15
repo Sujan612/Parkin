@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class cosmos_model extends AppCompatActivity {
+public class cosmos_model extends BaseActivity {
 
     private static final String location = "27.65618593181801, 85.3215688432409";//cosmos ko lati,longitude
     private Button selectedButton = null;
@@ -40,6 +41,16 @@ public class cosmos_model extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cosmos_model);
+        // Retrieve data passed from HomeActivity
+        String locationName = getIntent().getStringExtra("location_name");
+        String locationAddress = getIntent().getStringExtra("location_address");
+        String locationDistance = getIntent().getStringExtra("location_distance");
+        String locationPrice = getIntent().getStringExtra("location_price");
+
+
+
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

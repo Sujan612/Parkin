@@ -1,6 +1,7 @@
 package com.example.parkin1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +16,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 public class MainActivity extends BaseActivity {
 
     private static final String PREFS_NAME = "language_prefs";
@@ -38,7 +42,7 @@ public class MainActivity extends BaseActivity {
     private FirebaseAuth mAuth;
     private EditText loginEmail, loginPassword;
     private Button loginBtn;
-    private TextView signupBtn, forgotPassBtn;
+    private TextView signupBtn, forgotPassBtn, changeLanguageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class MainActivity extends BaseActivity {
         loginBtn = findViewById(R.id.login_btn);
         forgotPassBtn = findViewById(R.id.forgotpass_btn);
         signupBtn = findViewById(R.id.signup_btn);
+        changeLanguageBtn = findViewById(R.id.change_language_text);
 
         // Handle window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -62,6 +67,9 @@ public class MainActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Set language based on saved preference
+        applySavedLanguage();
 
         // Login button click listener
         loginBtn.setOnClickListener(v -> {
@@ -85,6 +93,9 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(MainActivity.this, SignupActivity.class));
         });
 
+        // Change language button click listener
+        changeLanguageBtn.setOnClickListener(v -> showChangeLanguageDialog());
+
         // Handle double back press to exit
         OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
         onBackPressedDispatcher.addCallback(this, new OnBackPressedCallback(true) {
@@ -104,6 +115,44 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void showChangeLanguageDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Language")
+                .setItems(new CharSequence[]{"English", "Nepali"}, (dialog, which) -> {
+                    String languageCode = which == 0 ? "en" : "ne";
+                    setLanguage(languageCode);
+                });
+        builder.create().show();
+    }
+
+    private void setLanguage(String languageCode) {
+        SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putString(KEY_LANGUAGE, languageCode);
+        editor.apply();
+
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        // Apply configuration changes without recreating the activity
+        getResources().getConfiguration().setLocale(locale);
+        getResources().updateConfiguration(getResources().getConfiguration(), getResources().getDisplayMetrics());
+
+        // Restart activity to apply the new language
+        recreate();
+    }
+
+    private void applySavedLanguage() {
+        String languageCode = getSavedLanguage();
+        if (!languageCode.equals(Locale.getDefault().getLanguage())) {
+            setLanguage(languageCode);
+        }
+    }
+
+    private String getSavedLanguage() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        return prefs.getString(KEY_LANGUAGE, "en"); // Default to English
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -112,24 +161,33 @@ public class MainActivity extends BaseActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
-            // User is logged in, check their role
+            // User is logged in, check their role and work
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-            userRef.child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String role = dataSnapshot.getValue(String.class);
+                    String role = dataSnapshot.child("role").getValue(String.class);
+                    String work = dataSnapshot.child("work").getValue(String.class);
 
-                    if (role != null) {
+                    if (role != null && work != null) {
                         if (role.equals("operator")) {
-                            // Redirect to OperatorActivity
-                            startActivity(new Intent(MainActivity.this, OperatorActivity.class));
+                            if (work.equals("cosmos")) {
+                                // Redirect to CosmosOperatorActivity
+                                startActivity(new Intent(MainActivity.this, cosmos_operator.class));
+                            } else if (work.equals("bhatbheteni")) {
+                                // Redirect to BhatbheteniActivity
+                                startActivity(new Intent(MainActivity.this, Bhatbheteni_operator.class));
+                            } else {
+                                // Handle other work values or default behavior
+                                Toast.makeText(MainActivity.this, "Unknown work value. Please contact support.", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             // Redirect to HomeActivity for regular users
                             startActivity(new Intent(MainActivity.this, HomeActivity.class));
                         }
                         finish(); // Close the current activity
                     } else {
-                        Toast.makeText(MainActivity.this, "Role not found. Please contact support.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Role or work not found. Please contact support.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -153,31 +211,40 @@ public class MainActivity extends BaseActivity {
                         // Login successful
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            // Fetch user role from Firebase Realtime Database
+                            // Fetch user role and work from Firebase Realtime Database
                             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-                            userRef.child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+                            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    String role = dataSnapshot.getValue(String.class);
+                                    String role = dataSnapshot.child("role").getValue(String.class);
+                                    String work = dataSnapshot.child("work").getValue(String.class);
 
-                                    if (role != null) {
+                                    if (role != null && work != null) {
                                         if (role.equals("operator")) {
-                                            // Redirect to OperatorActivity
-                                            startActivity(new Intent(MainActivity.this, OperatorActivity.class));
+                                            if (work.equals("cosmos")) {
+                                                // Redirect to CosmosOperatorActivity
+                                                startActivity(new Intent(MainActivity.this, cosmos_operator.class));
+                                            } else if (work.equals("bhatbheteni")) {
+                                                // Redirect to BhatbheteniActivity
+                                                startActivity(new Intent(MainActivity.this, Bhatbheteni_operator.class));
+                                            } else {
+                                                // Handle other work values or default behavior
+                                                Toast.makeText(MainActivity.this, "Unknown work value. Please contact support.", Toast.LENGTH_SHORT).show();
+                                            }
                                         } else {
-                                            // Redirect to HomeActivity
+                                            // Redirect to HomeActivity for regular users
                                             startActivity(new Intent(MainActivity.this, HomeActivity.class));
                                         }
                                         finish(); // Close the current activity
                                     } else {
-                                        // Role not found, contact support
-                                        Toast.makeText(MainActivity.this, "Role not found. Please contact support.", Toast.LENGTH_SHORT).show();
+                                        // Role or work not found, contact support
+                                        Toast.makeText(MainActivity.this, "Role or work not found. Please contact support.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    // Handle possible errors.
+                                    // Handle possible errors
                                     Log.e("MainActivity", "Database error: " + databaseError.getMessage());
                                     Toast.makeText(MainActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -191,5 +258,4 @@ public class MainActivity extends BaseActivity {
                     }
                 });
     }
-
 }

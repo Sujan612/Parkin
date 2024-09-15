@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -34,25 +35,21 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener {
         bottomNavigationView = findViewById(R.id.bottomNavigationView3);
         bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setItemIconTintList(null);
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == R.id.home) {
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                } else if (itemId == R.id.navigation) {
-                    startActivity(new Intent(getApplicationContext(), NavigationActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                } else if (itemId == R.id.settings) {
-                    startActivity(new Intent(getApplicationContext(), SettingActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                }
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.home) {
+                // Avoid starting the same activity
+                return true;
+            } else if (itemId == R.id.navigation) {
+                startActivity(new Intent(getApplicationContext(), NavigationActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (itemId == R.id.settings) {
+                startActivity(new Intent(getApplicationContext(), SettingActivity.class));
+                overridePendingTransition(0, 0);
                 return true;
             }
+            return false;
         });
 
         // Setup RecyclerView
@@ -83,15 +80,34 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener {
 
     @Override
     public void onItemClick(int position) {
-        // Handle the click event here
-        Toast.makeText(this, "Clicked item at position: " + position, Toast.LENGTH_SHORT).show();
+        try {
+            // Get the location name
+            String locationName = locationList.get(position).getName();
+            Log.d("HomeActivity", "Item clicked: " + locationName);
 
-        // Start new activity and pass data to it
-        Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
-        intent.putExtra("location_name", locationList.get(position).getName());
-        intent.putExtra("location_address", locationList.get(position).getAddress());
-        intent.putExtra("location_distance", locationList.get(position).getDistance());
-        intent.putExtra("location_price", locationList.get(position).getPrice());
-        startActivity(intent);
+            // Determine which activity to start based on the location name
+            Intent intent;
+            switch (locationName) {
+                case "Cosmos College of Management and Technology":
+                    intent = new Intent(HomeActivity.this, cosmos_model.class);
+                    break;
+                case "Bhatbhateni":
+                    intent = new Intent(HomeActivity.this, Bhatbheteni_model.class);
+                    break;
+                default:
+                    Toast.makeText(this, "No activity found for this location", Toast.LENGTH_SHORT).show();
+                    return;
+            }
+
+            // Pass data to the new activity
+            intent.putExtra("location_name", locationList.get(position).getName());
+            intent.putExtra("location_address", locationList.get(position).getAddress());
+            intent.putExtra("location_distance", locationList.get(position).getDistance());
+            intent.putExtra("location_price", locationList.get(position).getPrice());
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.e("HomeActivity", "Error starting activity", e);
+        }
     }
+
 }
