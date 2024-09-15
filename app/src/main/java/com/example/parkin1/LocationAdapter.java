@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> {
-    private List<CustomLocation> locationList;
 
-    // Constructor to accept the list of CustomLocation objects
-    public LocationAdapter(List<CustomLocation> locationList) {
+    private List<CustomLocation> locationList;
+    private OnItemClickListener onItemClickListener; // Declare the click listener interface
+
+    // Constructor to accept the list of CustomLocation objects and the click listener
+    public LocationAdapter(List<CustomLocation> locationList, OnItemClickListener listener) {
         this.locationList = locationList;
+        this.onItemClickListener = listener; // Initialize the listener
     }
 
     @NonNull
@@ -33,6 +36,13 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         holder.locationAddress.setText(location.getAddress());
         holder.locationDistance.setText(location.getDistance());
         holder.locationPrice.setText(location.getPrice());
+
+        // Set the click listener on the item view
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(position); // Pass the click event to the listener
+            }
+        });
     }
 
     @Override
@@ -41,11 +51,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     }
 
     public static class LocationViewHolder extends RecyclerView.ViewHolder {
-        TextView  locationNumber,locationName, locationAddress, locationDistance, locationPrice;
+        TextView locationNumber, locationName, locationAddress, locationDistance, locationPrice;
 
         public LocationViewHolder(View itemView) {
             super(itemView);
-            locationNumber=itemView.findViewById(R.id.locationNumber);
+            locationNumber = itemView.findViewById(R.id.locationNumber);
             locationName = itemView.findViewById(R.id.locationName);
             locationAddress = itemView.findViewById(R.id.locationAddress);
             locationDistance = itemView.findViewById(R.id.locationDistance);
