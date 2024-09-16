@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
     implementation(libs.play.services.location)
+    implementation(libs.play.services.maps)
 
     testImplementation ("org.junit.jupiter:junit-jupiter:5.8.0")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.0")
