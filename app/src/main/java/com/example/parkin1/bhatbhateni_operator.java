@@ -1,11 +1,13 @@
 package com.example.parkin1;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,59 +25,45 @@ import com.google.firebase.database.ValueEventListener;
 public class bhatbhateni_operator extends AppCompatActivity {
 
     private Button selectedButton = null;
-    private boolean isColorChanged = false;
     private DatabaseReference databaseReference;
-    private boolean isOperator = true;  // Set this to false if it's a regular user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bhatbhateni_operator);
 
+        // Enable edge-to-edge display and handle window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("buttonState");
+        // Reference Firebase database where button states (parking space availability) are stored
+        databaseReference = FirebaseDatabase.getInstance().getReference("bhatbhateniParkingSpaces");
 
-        // Define your buttons
-        Button button1 = findViewById(R.id.b_bhatbhateni_1);
-        Button button2 = findViewById(R.id.b_bhatbhateni_2);
-        Button button3 = findViewById(R.id.b_bhatbhateni_3);
-        Button button4 = findViewById(R.id.b_bhatbhateni_4);
-        Button button5 = findViewById(R.id.b_bhatbhateni_5);
-        Button button6 = findViewById(R.id.b_bhatbhateni_6);
-        Button button7 = findViewById(R.id.b_bhatbhateni_7);
-        Button button8 = findViewById(R.id.b_bhatbhateni_8);
-        Button button9 = findViewById(R.id.b_bhatbhateni_9);
-        Button button10 = findViewById(R.id.b_bhatbhateni_10);
-        Button button11 = findViewById(R.id.b_bhatbhateni_11);
-        Button button12 = findViewById(R.id.b_bhatbhateni_12);
-        Button button13 = findViewById(R.id.b_bhatbhateni_13);
-        Button button14 = findViewById(R.id.b_bhatbhateni_14);
-        Button button15 = findViewById(R.id.c_bhatbhateni_1);
-        Button button16 = findViewById(R.id.c_bhatbhateni_2);
-        Button button17 = findViewById(R.id.c_bhatbhateni_3);
-        Button button18 = findViewById(R.id.c_bhatbhateni_4);
-        Button button19 = findViewById(R.id.c_bhatbhateni_5);
-        Button button20 = findViewById(R.id.c_bhatbhateni_6);
+        // Define parking space buttons (both B and C sections)
+        Button[] buttons = new Button[] {
+                findViewById(R.id.b_bhatbhateni_1), findViewById(R.id.b_bhatbhateni_2), findViewById(R.id.b_bhatbhateni_3),
+                findViewById(R.id.b_bhatbhateni_4), findViewById(R.id.b_bhatbhateni_5), findViewById(R.id.b_bhatbhateni_6),
+                findViewById(R.id.b_bhatbhateni_7), findViewById(R.id.b_bhatbhateni_8), findViewById(R.id.b_bhatbhateni_9),
+                findViewById(R.id.c_bhatbhateni_1), findViewById(R.id.c_bhatbhateni_2), findViewById(R.id.c_bhatbhateni_3),
+                findViewById(R.id.c_bhatbhateni_4)
+        };
 
-        // Occupied and Available buttons
-        Button occupied = findViewById(R.id.occupied_bhatbhateni);
-        Button available = findViewById(R.id.available_bhatbhateni);
+        Button occupiedButton = findViewById(R.id.occupied_bhatbhateni);
+        Button availableButton = findViewById(R.id.available_bhatbhateni);
+        ImageButton settingsButton = findViewById(R.id.imageButton2);
 
-        // Firebase sync
+        // Listen to Firebase database changes and update the button states accordingly
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String selectedButtonId = dataSnapshot.child("selectedButton").getValue(String.class);
-                String color = dataSnapshot.child("color").getValue(String.class);
-                Boolean isChanged = dataSnapshot.child("isColorChanged").getValue(Boolean.class);
-
-                if (selectedButtonId != null && color != null && isChanged != null) {
-                    restoreButtonState(selectedButtonId, color, isChanged);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String buttonId = snapshot.getKey(); // Firebase key corresponds to button ID
+                    String color = snapshot.child("color").getValue(String.class);
+                    Log.d("FirebaseData", "Button ID: " + buttonId + ", Color: " + color);
+                    updateButtonColor(buttonId, color);
                 }
             }
 
@@ -85,105 +73,72 @@ public class bhatbhateni_operator extends AppCompatActivity {
             }
         });
 
-        // Button click listener for selection
-        View.OnClickListener buttonClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isColorChanged || (isOperator && selectedButton.getTag().equals("red")&&!selectedButton.getTag().equals("yellow"))) {
-                    selectedButton = (Button) view;
-                    selectedButton.setBackgroundResource(R.drawable.yes_border);
-                } else {
-                    Toast.makeText(bhatbhateni_operator.this, "A space is already selected!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
+        // Handle button clicks to select parking spaces
+        View.OnClickListener buttonClickListener = view -> selectedButton = (Button) view;
 
-        button1.setOnClickListener(buttonClickListener);
-        button2.setOnClickListener(buttonClickListener);
-        button3.setOnClickListener(buttonClickListener);
-        button4.setOnClickListener(buttonClickListener);
-        button5.setOnClickListener(buttonClickListener);
-        button6.setOnClickListener(buttonClickListener);
-        button7.setOnClickListener(buttonClickListener);
-        button8.setOnClickListener(buttonClickListener);
-        button9.setOnClickListener(buttonClickListener);
-        button10.setOnClickListener(buttonClickListener);
-        button11.setOnClickListener(buttonClickListener);
-        button12.setOnClickListener(buttonClickListener);
-        button13.setOnClickListener(buttonClickListener);
-        button14.setOnClickListener(buttonClickListener);
-        button15.setOnClickListener(buttonClickListener);
-        button16.setOnClickListener(buttonClickListener);
-        button17.setOnClickListener(buttonClickListener);
-        button18.setOnClickListener(buttonClickListener);
-        button19.setOnClickListener(buttonClickListener);
-        button20.setOnClickListener(buttonClickListener);
+        // Assign click listeners to all parking space buttons
+        for (Button button : buttons) {
+            button.setOnClickListener(buttonClickListener);
+        }
 
-        // Occupied button logic (can be changed by operator, not by user)
-        occupied.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedButton != null && (!selectedButton.getTag().equals("red") || isOperator ||!selectedButton.getTag().equals("yellow"))) {
-                    selectedButton.setBackgroundColor(Color.RED);
-                    selectedButton.setTag("red"); // Mark button as occupied
-                    isColorChanged = true;
-                    saveButtonState("RED");
-                } else {
-                    Toast.makeText(bhatbhateni_operator.this, "Cannot change an occupied space!", Toast.LENGTH_SHORT).show();
-                }
+        // Handle marking spaces as occupied
+        occupiedButton.setOnClickListener(v -> {
+            if (selectedButton != null) {
+                selectedButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED)); // Mark as occupied
+                selectedButton.setTag("red");
+                updateFirebaseState(selectedButton.getId(), "red");
+            } else {
+                Toast.makeText(bhatbhateni_operator.this, "No space selected!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Available button logic (operator can change a red button, user cannot)
-        available.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedButton != null && (!selectedButton.getTag().equals("red") || isOperator ||!selectedButton.getTag().equals("yellow"))) {
-                    selectedButton.setBackgroundColor(Color.TRANSPARENT);
-                    selectedButton.setTag(""); // Clear color
-                    isColorChanged = false;
-                    saveButtonState("TRANSPARENT");
-                } else {
-                    Toast.makeText(bhatbhateni_operator.this, "Cannot change an occupied space!", Toast.LENGTH_SHORT).show();
-                }
+        // Handle marking spaces as available
+        availableButton.setOnClickListener(v -> {
+            if (selectedButton != null) {
+                selectedButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN)); // Mark as available
+                selectedButton.setTag("green");
+                updateFirebaseState(selectedButton.getId(), "green");
+            } else {
+                Toast.makeText(bhatbhateni_operator.this, "No space selected!", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // Handle settings button click
+        settingsButton.setOnClickListener(v -> {
+            Intent settingsIntent = new Intent(bhatbhateni_operator.this,settingoperatorActivity.class);
+            startActivity(settingsIntent);
         });
     }
 
-    private void saveButtonState(String color) {
-        if (selectedButton != null) {
-            String selectedButtonId = getResources().getResourceEntryName(selectedButton.getId());
-            databaseReference.child("selectedButton").setValue(selectedButtonId);
-            databaseReference.child("color").setValue(color);
-            databaseReference.child("isColorChanged").setValue(true);
-        }
+    private void updateFirebaseState(int buttonId, String color) {
+        String buttonIdStr = getResources().getResourceEntryName(buttonId); // Convert button ID to string
+        databaseReference.child(buttonIdStr).child("color").setValue(color); // Update color in Firebase
     }
 
-    private void restoreButtonState(String selectedButtonId, String color, boolean isChanged) {
-        deselectPreviousButton();
-        @SuppressLint("DiscouragedApi") int resId = getResources().getIdentifier(selectedButtonId, "id", getPackageName());
-        selectedButton = findViewById(resId);
-        if (selectedButton != null) {
-            selectedButton.setBackgroundResource(R.drawable.yes_border);
-            if(color.equals("RED")) {
-                selectedButton.setBackgroundColor(Color.RED);
-                selectedButton.setTag("red"); // Mark as occupied
-            }else if (color.equals("YELLOW")) {
-                selectedButton.setBackgroundColor(Color.YELLOW);
-                selectedButton.setTag("yellow");
-            }else if(color.equals("TRANSPARENT")) {
-                selectedButton.setBackgroundColor(Color.TRANSPARENT);
-                selectedButton.setTag(""); // Clear tag
+    private void updateButtonColor(String buttonId, String color) {
+        int resId = getResources().getIdentifier(buttonId, "id", getPackageName());
+        Button button = findViewById(resId);
+
+        if (button != null) {
+            int colorValue;
+            switch (color) {
+                case "green":
+                    colorValue = Color.GREEN;
+                    break;
+                case "red":
+                    colorValue = Color.RED;
+                    break;
+                case "yellow":
+                    colorValue = Color.YELLOW;
+                    break;
+                default:
+                    colorValue = Color.TRANSPARENT;
+                    break;
             }
-        }
-        isColorChanged = isChanged;
-    }
-
-    private void deselectPreviousButton() {
-        if (selectedButton != null) {
-            selectedButton.setBackgroundResource(R.drawable.no_border);
-            selectedButton.setBackgroundColor(Color.TRANSPARENT);
-            selectedButton.setTag(""); // Reset tag
+            button.setBackgroundTintList(ColorStateList.valueOf(colorValue)); // Apply color tint
+            button.setTag(color); // Set tag for button state
+        } else {
+            Log.e("UpdateButtonColor", "Button with ID " + buttonId + " not found");
         }
     }
 }

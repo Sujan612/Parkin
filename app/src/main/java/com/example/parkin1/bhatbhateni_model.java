@@ -1,24 +1,22 @@
 package com.example.parkin1;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.parkin1.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,200 +25,129 @@ import com.google.firebase.database.ValueEventListener;
 
 public class bhatbhateni_model extends AppCompatActivity {
 
-    private static final String location = "27.65618593181801, 85.3215688432409";//cosmos ko lati,longitude
+    private static final String LOCATION = "27.683663382509627, 85.3298000828969"; // Bhatbhateni location coordinates
     private Button selectedButton = null;
-    private boolean isColorChanged = false;
+    private boolean isColorChanged = false;  // Flag to prevent multiple reservations
     private DatabaseReference databaseReference;
-    private Runnable resetColorChangedTask;
     private Handler handler = new Handler();
-    private boolean isOperator = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_bhatbhateni_model);
+
+        // Enable edge-to-edge display and handle window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("buttonState");
-        //button
-        Button button1 = findViewById(R.id.b_bhatbhateni_1);
-        Button button2 = findViewById(R.id.b_bhatbhateni_2);
-        Button button3 = findViewById(R.id.b_bhatbhateni_3);
-        Button button4 = findViewById(R.id.b_bhatbhateni_4);
-        Button button5 = findViewById(R.id.b_bhatbhateni_5);
-        Button button6 = findViewById(R.id.b_bhatbhateni_6);
-        Button button7 = findViewById(R.id.b_bhatbhateni_7);
-        Button button8 = findViewById(R.id.b_bhatbhateni_8);
-        Button button9 = findViewById(R.id.b_bhatbhateni_9);
-        Button button10 = findViewById(R.id.b_bhatbhateni_10);
-        Button button11 = findViewById(R.id.b_bhatbhateni_11);
-        Button button12 = findViewById(R.id.b_bhatbhateni_12);
-        Button button13 = findViewById(R.id.b_bhatbhateni_13);
-        Button button14 = findViewById(R.id.b_bhatbhateni_14);
-        Button button15 = findViewById(R.id.c_bhatbhateni_1);
-        Button button16 = findViewById(R.id.c_bhatbhateni_2);
-        Button button17 = findViewById(R.id.c_bhatbhateni_3);
-        Button button18 = findViewById(R.id.c_bhatbhateni_4);
-        Button button19 = findViewById(R.id.c_bhatbhateni_5);
-        Button button20 = findViewById(R.id.c_bhatbhateni_6);
-        Button reserve = findViewById(R.id.reserve_bhatbhateni);
-        Button navigate = findViewById(R.id.navigate_bhatbhateni);
-        //database sync
+        // Reference Firebase database where button states (parking space availability) are stored
+        databaseReference = FirebaseDatabase.getInstance().getReference("bhatbhateniParkingSpaces");
+
+        // Define parking space buttons (both B and C sections)
+        Button[] buttons = new Button[] {
+                findViewById(R.id.b_bhatbhateni_1), findViewById(R.id.b_bhatbhateni_2), findViewById(R.id.b_bhatbhateni_3),
+                findViewById(R.id.b_bhatbhateni_4), findViewById(R.id.b_bhatbhateni_5), findViewById(R.id.b_bhatbhateni_6),
+                findViewById(R.id.b_bhatbhateni_7), findViewById(R.id.b_bhatbhateni_8), findViewById(R.id.b_bhatbhateni_9),
+                findViewById(R.id.c_bhatbhateni_1), findViewById(R.id.c_bhatbhateni_2), findViewById(R.id.c_bhatbhateni_3),
+                findViewById(R.id.c_bhatbhateni_4)
+        };
+
+        Button reserveButton = findViewById(R.id.reserve_bhatbhateni);
+        Button navigateButton = findViewById(R.id.navigate_bhatbhateni);
+
+        // Listen to Firebase database changes and update the button states accordingly
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Get the button state from Firebase
-                String selectedButtonId = dataSnapshot.child("selectedButton").getValue(String.class);
-                String color = dataSnapshot.child("color").getValue(String.class);
-                Boolean isChanged = dataSnapshot.child("isColorChanged").getValue(Boolean.class);
-
-                if (selectedButtonId != null && color != null && isChanged != null) {
-                    // Restore the selected button and its state
-                    restoreButtonState(selectedButtonId, color, isChanged);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String buttonId = snapshot.getKey(); // Firebase key corresponds to button ID
+                    String color = snapshot.child("color").getValue(String.class);
+                    Log.d("FirebaseData", "Button ID: " + buttonId + ", Color: " + color);
+                    updateButtonColor(buttonId, color);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors
                 Toast.makeText(bhatbhateni_model.this, "Failed to sync data.", Toast.LENGTH_SHORT).show();
             }
         });
-        //button border
-        View.OnClickListener buttonClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isColorChanged) {
-                    if (!isOperator) {
-                        selectedButton = (Button) view;
-                        selectedButton.setBackgroundResource(R.drawable.yes_border);
-                    } else {
-                        Toast.makeText(bhatbhateni_model.this, "space is OCCUPIED", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(bhatbhateni_model.this, "Already reserved one space!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
+        // Handle button clicks to select parking spaces
+        View.OnClickListener buttonClickListener = view -> selectedButton = (Button) view;
 
-        button1.setOnClickListener(buttonClickListener);
-        button2.setOnClickListener(buttonClickListener);
-        button3.setOnClickListener(buttonClickListener);
-        button4.setOnClickListener(buttonClickListener);
-        button5.setOnClickListener(buttonClickListener);
-        button6.setOnClickListener(buttonClickListener);
-        button7.setOnClickListener(buttonClickListener);
-        button8.setOnClickListener(buttonClickListener);
-        button9.setOnClickListener(buttonClickListener);
-        button10.setOnClickListener(buttonClickListener);
-        button11.setOnClickListener(buttonClickListener);
-        button12.setOnClickListener(buttonClickListener);
-        button13.setOnClickListener(buttonClickListener);
-        button14.setOnClickListener(buttonClickListener);
-        button15.setOnClickListener(buttonClickListener);
-        button16.setOnClickListener(buttonClickListener);
-        button17.setOnClickListener(buttonClickListener);
-        button18.setOnClickListener(buttonClickListener);
-        button19.setOnClickListener(buttonClickListener);
-        button20.setOnClickListener(buttonClickListener);
-        navigate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGoogleMapsNavigation(location);
-            }
-        });
-
-
-        reserve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isColorChanged && selectedButton != null) {
-                    if (!isOperator && "RED".equals(selectedButton.getTag())) {
-                        Toast.makeText(bhatbhateni_model.this, "Operator cannot change the red button!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        selectedButton.setBackgroundColor(Color.YELLOW);
-                        isColorChanged = true;
-                        saveButtonState();
-                        scheduleColorChangeReset();
-                    }
-                }
-            }
-        });
-
-    }
-
-    private void saveButtonState() {
-        if (selectedButton != null) {
-            String selectedButtonId = getResources().getResourceEntryName(selectedButton.getId());
-            databaseReference.child("selectedButton").setValue(selectedButtonId);
-            databaseReference.child("color").setValue("YELLOW");
-            databaseReference.child("isColorChanged").setValue(true);
-        }
-    }
-
-    private void restoreButtonState (String selectedButtonId, String color,boolean isChanged){
-        // Reset borders for all buttons
-        deselectPreviousButton();
-        @SuppressLint("DiscouragedApi")int resId = getResources().getIdentifier(selectedButtonId, "id", getPackageName());
-        selectedButton = findViewById(resId);
-        if (selectedButton != null) {
-            selectedButton.setBackgroundResource(R.drawable.yes_border);
-            if (color.equals("YELLOW")) {
-                selectedButton.setBackgroundColor(Color.YELLOW);
-            }else if(color.equals("RED")){
-                selectedButton.setBackgroundColor(Color.RED);
-            }else{
-                selectedButton.setBackgroundColor(Color.TRANSPARENT);
-            }
-        }
-        isColorChanged = isChanged;
-    }
-    private void scheduleColorChangeReset() {
-        if (resetColorChangedTask != null) {
-            handler.removeCallbacks(resetColorChangedTask);
+        // Assign click listeners to all parking space buttons
+        for (Button button : buttons) {
+            button.setOnClickListener(buttonClickListener);
         }
 
-        // to reset the flag and allow selection
-        resetColorChangedTask = new Runnable() {
-            @Override
-            public void run() {
-                isColorChanged = false; // Reset the flag
-                deselectPreviousButton(); // Deselect the button
-                databaseReference.child("isColorChanged").setValue(false);
-            }
-        };
-        handler.postDelayed(resetColorChangedTask, 15000);//15sec
-    }
-    private void deselectPreviousButton() {
-        if (selectedButton != null) {
-            selectedButton.setBackgroundResource(R.drawable.no_border);
-            selectedButton.setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
-    //location
-    private void openGoogleMapsNavigation(String location) {
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + location);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-
-        PackageManager packageManager = getPackageManager();
-        if (mapIntent.resolveActivity(packageManager) != null) {
-            startActivity(mapIntent);
-        } else {
-            // redirect to Google Play Store
-            Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.apps.maps"));
-            if (playStoreIntent.resolveActivity(packageManager) != null) {
-                startActivity(playStoreIntent);
+        // Handle reservation updates
+        reserveButton.setOnClickListener(v -> {
+            if (selectedButton != null && !isColorChanged) {
+                selectedButton.setBackgroundTintList(ColorStateList.valueOf(Color.YELLOW)); // Mark as reserved
+                selectedButton.setTag("yellow");
+                updateFirebaseState(selectedButton.getId(), "yellow");
+                isColorChanged = true; // Prevent multiple reservations
+                resetColorChangedFlag();
             } else {
-                Toast.makeText(bhatbhateni_model.this, "Unable to open Play Store", Toast.LENGTH_SHORT).show();
+                Toast.makeText(bhatbhateni_model.this, "No space selected or already reserved!", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // Handle navigation button to open Google Maps with directions to Bhatbhateni, Sathdobato
+        navigateButton.setOnClickListener(v -> {
+            String destination = "Bhatbhateni, Sathdobato, Lalitpur";
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + Uri.encode(destination));
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(mapIntent);
+            } else {
+                // If Google Maps is not installed, fallback to web URL
+                Uri webUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=" + Uri.encode(destination));
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webUri);
+                startActivity(webIntent);
+            }
+        });
+
+    }
+
+    private void updateFirebaseState(int buttonId, String color) {
+        String buttonIdStr = getResources().getResourceEntryName(buttonId); // Convert button ID to string
+        databaseReference.child(buttonIdStr).child("color").setValue(color); // Update color in Firebase
+    }
+
+    private void updateButtonColor(String buttonId, String color) {
+        int resId = getResources().getIdentifier(buttonId, "id", getPackageName());
+        Button button = findViewById(resId);
+
+        if (button != null) {
+            int colorValue;
+            switch (color) {
+                case "green":
+                    colorValue = Color.GREEN;
+                    break;
+                case "red":
+                    colorValue = Color.RED;
+                    break;
+                case "yellow":
+                    colorValue = Color.YELLOW;
+                    break;
+                default:
+                    colorValue = Color.TRANSPARENT;
+                    break;
+            }
+            button.setBackgroundTintList(ColorStateList.valueOf(colorValue)); // Apply color tint
+            button.setTag(color); // Set tag for button state
+        } else {
+            Log.e("UpdateButtonColor", "Button with ID " + buttonId + " not found");
         }
+    }
+
+    private void resetColorChangedFlag() {
+        handler.postDelayed(() -> isColorChanged = false, 5000); // Reset flag after 5 seconds
     }
 }

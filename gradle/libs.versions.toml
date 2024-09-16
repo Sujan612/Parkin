@@ -21,6 +21,7 @@ firebaseAuth = "23.0.0"
 googleServices = "4.4.2"
 playServices = "12.0.1"
 firebaseFirestore = "25.1.0"
+playServicesLocation = "21.3.0"
 
 [libraries]
 curved_bottom_navigation = { module = "np.com.susanthapa:curved_bottom_navigation", version.ref = "curved_bottom_navigation" }
@@ -43,6 +44,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 play-services = { group = "com.google.android.gms", name = "play-services", version.ref = "playServices" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

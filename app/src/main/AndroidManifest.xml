@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="No" />
 
+
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -29,10 +31,10 @@
             android:name=".settingoperatorActivity"
             android:exported="false" />
         <activity
-            android:name=".Bhatbheteni_operator"
+            android:name=".bhatbhateni_model"
             android:exported="false" />
         <activity
-            android:name=".Bhatbheteni_model"
+            android:name=".bhatbhateni_operator"
             android:exported="false" />
         <activity
             android:name=".DetailActivity"

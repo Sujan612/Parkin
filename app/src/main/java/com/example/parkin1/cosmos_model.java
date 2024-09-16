@@ -1,6 +1,7 @@
 package com.example.parkin1;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -31,7 +32,6 @@ public class cosmos_model extends AppCompatActivity {
     private Button selectedButton = null;
     private boolean isColorChanged = false;  // Flag to prevent multiple reservations
     private DatabaseReference databaseReference;
-    private Runnable resetColorChangedTask;
     private Handler handler = new Handler();
 
     @Override
@@ -100,15 +100,19 @@ public class cosmos_model extends AppCompatActivity {
             }
         });
 
-        // Handle navigation button to open Google Maps
+        // Handle navigation button to open Google Maps with directions to Cosmos College
         navigateButton.setOnClickListener(v -> {
-            Uri gmmIntentUri = Uri.parse("geo:" + LOCATION + "?q=" + LOCATION + "(Cosmos College)");
+            String destination = "Cosmos College of Management and Technology, Tutepani, Lalitpur";
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + Uri.encode(destination));
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
             mapIntent.setPackage("com.google.android.apps.maps");
             if (mapIntent.resolveActivity(getPackageManager()) != null) {
                 startActivity(mapIntent);
             } else {
-                Toast.makeText(cosmos_model.this, "Google Maps app is not installed.", Toast.LENGTH_SHORT).show();
+                // If Google Maps is not installed, fallback to web URL
+                Uri webUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=" + Uri.encode(destination));
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webUri);
+                startActivity(webIntent);
             }
         });
     }

@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
 
         // Forgot password button click listener
         forgotPassBtn.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, GetotpActivity.class));
+            startActivity(new Intent(MainActivity.this, forgot_password.class));
         });
 
         // Signup button click listener
@@ -161,41 +161,43 @@ public class MainActivity extends BaseActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
-            // User is logged in, check their role and work
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String role = dataSnapshot.child("role").getValue(String.class);
-                    String work = dataSnapshot.child("work").getValue(String.class);
+            // Run database fetch in background to avoid blocking UI
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String role = dataSnapshot.child("role").getValue(String.class);
+                        String work = dataSnapshot.child("work").getValue(String.class);
 
-                    if (role != null && work != null) {
-                        if (role.equals("operator")) {
-                            if (work.equals("cosmos")) {
-                                // Redirect to CosmosOperatorActivity
-                                startActivity(new Intent(MainActivity.this, cosmos_operator.class));
-                            } else if (work.equals("bhatbheteni")) {
-                                // Redirect to BhatbheteniActivity
-                                startActivity(new Intent(MainActivity.this, Bhatbheteni_operator.class));
+                        if (role != null && work != null) {
+                            if (role.equals("operator")) {
+                                if (work.equals("cosmos")) {
+                                    // Redirect to CosmosOperatorActivity
+                                    startActivity(new Intent(MainActivity.this, cosmos_operator.class));
+                                } else if (work.equals("bhatbheteni")) {
+                                    // Redirect to BhatbhateniActivity
+                                    startActivity(new Intent(MainActivity.this, bhatbhateni_operator.class));
+                                } else {
+                                    // Handle other work values or default behavior
+                                    Toast.makeText(MainActivity.this, "Unknown work value. Please contact support.", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                // Handle other work values or default behavior
-                                Toast.makeText(MainActivity.this, "Unknown work value. Please contact support.", Toast.LENGTH_SHORT).show();
+                                // Redirect to HomeActivity for regular users
+                                startActivity(new Intent(MainActivity.this, HomeActivity.class));
                             }
+                            finish(); // Close the current activity
                         } else {
-                            // Redirect to HomeActivity for regular users
-                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                            Toast.makeText(MainActivity.this, "Role or work not found. Please contact support.", Toast.LENGTH_SHORT).show();
                         }
-                        finish(); // Close the current activity
-                    } else {
-                        Toast.makeText(MainActivity.this, "Role or work not found. Please contact support.", Toast.LENGTH_SHORT).show();
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(MainActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(MainActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }, 1000);  // Delay for smooth transition
         }
     }
 
@@ -208,10 +210,8 @@ public class MainActivity extends BaseActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Login successful
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            // Fetch user role and work from Firebase Realtime Database
                             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
                             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -222,39 +222,29 @@ public class MainActivity extends BaseActivity {
                                     if (role != null && work != null) {
                                         if (role.equals("operator")) {
                                             if (work.equals("cosmos")) {
-                                                // Redirect to CosmosOperatorActivity
                                                 startActivity(new Intent(MainActivity.this, cosmos_operator.class));
                                             } else if (work.equals("bhatbheteni")) {
-                                                // Redirect to BhatbheteniActivity
-                                                startActivity(new Intent(MainActivity.this, Bhatbheteni_operator.class));
+                                                startActivity(new Intent(MainActivity.this, bhatbhateni_operator.class));
                                             } else {
-                                                // Handle other work values or default behavior
                                                 Toast.makeText(MainActivity.this, "Unknown work value. Please contact support.", Toast.LENGTH_SHORT).show();
                                             }
                                         } else {
-                                            // Redirect to HomeActivity for regular users
                                             startActivity(new Intent(MainActivity.this, HomeActivity.class));
                                         }
-                                        finish(); // Close the current activity
+                                        finish();
                                     } else {
-                                        // Role or work not found, contact support
                                         Toast.makeText(MainActivity.this, "Role or work not found. Please contact support.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    // Handle possible errors
-                                    Log.e("MainActivity", "Database error: " + databaseError.getMessage());
                                     Toast.makeText(MainActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                     } else {
-                        // If login fails, display an error message
-                        String errorMessage = task.getException() != null ? task.getException().getMessage() : "Login failed";
-                        Toast.makeText(MainActivity.this, "Login failed: " + errorMessage, Toast.LENGTH_SHORT).show();
-                        Log.e("MainActivity", "Login failed: " + errorMessage);
+                        Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
