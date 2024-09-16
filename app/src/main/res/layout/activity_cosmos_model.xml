@@ -84,14 +84,14 @@
       android:id="@+id/b_cosmos_2"
       android:layout_width="100dp"
       android:layout_height="50dp"
-      android:layout_marginBottom="12dp"
+      android:layout_marginBottom="4dp"
       android:backgroundTint="@color/EndColor"
       android:text="B2"
       android:textColor="@color/text_shade"
       android:textSize="20sp"
       app:layout_constraintBottom_toTopOf="@+id/b_cosmos_3"
       app:layout_constraintEnd_toEndOf="@+id/imageView7"
-      app:layout_constraintHorizontal_bias="0.09"
+      app:layout_constraintHorizontal_bias="0.094"
       app:layout_constraintStart_toStartOf="@+id/imageView7" />
 
   <Button

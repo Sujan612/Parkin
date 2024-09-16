@@ -3,18 +3,18 @@ package com.example.parkin1;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -25,198 +25,121 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class cosmos_model extends BaseActivity {
+public class cosmos_model extends AppCompatActivity {
 
-    private static final String location = "27.65618593181801, 85.3215688432409";//cosmos ko lati,longitude
+    private static final String LOCATION = "27.65618593181801, 85.3215688432409"; // Cosmos location coordinates
     private Button selectedButton = null;
-    private boolean isColorChanged = false;
+    private boolean isColorChanged = false;  // Flag to prevent multiple reservations
     private DatabaseReference databaseReference;
     private Runnable resetColorChangedTask;
     private Handler handler = new Handler();
-    private boolean isOperator = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cosmos_model);
-        // Retrieve data passed from HomeActivity
-        String locationName = getIntent().getStringExtra("location_name");
-        String locationAddress = getIntent().getStringExtra("location_address");
-        String locationDistance = getIntent().getStringExtra("location_distance");
-        String locationPrice = getIntent().getStringExtra("location_price");
 
-
-
-
-
+        // Enable edge-to-edge display and handle window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("buttonState");
-        //button
-        Button button1 = findViewById(R.id.b_cosmos_1);
-        Button button2 = findViewById(R.id.b_cosmos_2);
-        Button button3 = findViewById(R.id.b_cosmos_3);
-        Button button4 = findViewById(R.id.b_cosmos_4);
-        Button button5 = findViewById(R.id.b_cosmos_5);
-        Button button6 = findViewById(R.id.b_cosmos_6);
-        Button button7 = findViewById(R.id.b_cosmos_7);
-        Button button8 = findViewById(R.id.b_cosmos_8);
-        Button button9 = findViewById(R.id.b_cosmos_9);
-        Button button10 = findViewById(R.id.c_cosmos_1);
-        Button button11 = findViewById(R.id.c_cosmos_2);
-        Button button12 = findViewById(R.id.c_cosmos_3);
-        Button button13 = findViewById(R.id.c_cosmos_4);
-        Button reserve = findViewById(R.id.reserve_cosmos);
-        Button navigate = findViewById(R.id.navigate_cosmsos);
-        //database sync
+        // Reference Firebase database where button states (parking space availability) are stored
+        databaseReference = FirebaseDatabase.getInstance().getReference("parkingSpaces");
+
+        // Define parking space buttons (both B and C sections)
+        Button[] buttons = new Button[] {
+                findViewById(R.id.b_cosmos_1), findViewById(R.id.b_cosmos_2), findViewById(R.id.b_cosmos_3),
+                findViewById(R.id.b_cosmos_4), findViewById(R.id.b_cosmos_5), findViewById(R.id.b_cosmos_6),
+                findViewById(R.id.b_cosmos_7), findViewById(R.id.b_cosmos_8), findViewById(R.id.b_cosmos_9),
+                findViewById(R.id.c_cosmos_1), findViewById(R.id.c_cosmos_2), findViewById(R.id.c_cosmos_3),
+                findViewById(R.id.c_cosmos_4)
+        };
+
+        Button reserveButton = findViewById(R.id.reserve_cosmos);
+        Button navigateButton = findViewById(R.id.navigate_cosmsos);
+
+        // Listen to Firebase database changes and update the button states accordingly
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Get the button state from Firebase
-                String selectedButtonId = dataSnapshot.child("selectedButton").getValue(String.class);
-                String color = dataSnapshot.child("color").getValue(String.class);
-                Boolean isChanged = dataSnapshot.child("isColorChanged").getValue(Boolean.class);
-
-                if (selectedButtonId != null && color != null && isChanged != null) {
-                    // Restore the selected button and its state
-                    restoreButtonState(selectedButtonId, color, isChanged);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String buttonId = snapshot.getKey(); // Firebase key corresponds to button ID
+                    String color = snapshot.child("color").getValue(String.class);
+                    Log.d("FirebaseData", "Button ID: " + buttonId + ", Color: " + color);
+                    updateButtonState(buttonId, color);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors
                 Toast.makeText(cosmos_model.this, "Failed to sync data.", Toast.LENGTH_SHORT).show();
             }
         });
-        //button border
-        View.OnClickListener buttonClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isColorChanged) {
-                    if (!isOperator) {
-                        selectedButton = (Button) view;
-                        selectedButton.setBackgroundResource(R.drawable.yes_border);
-                    } else {
-                        Toast.makeText(cosmos_model.this, "space is OCCUPIED", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(cosmos_model.this, "Already reserved one space!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
+        // Handle button clicks to select parking spaces
+        View.OnClickListener buttonClickListener = view -> selectedButton = (Button) view;
 
-        button1.setOnClickListener(buttonClickListener);
-        button2.setOnClickListener(buttonClickListener);
-        button3.setOnClickListener(buttonClickListener);
-        button4.setOnClickListener(buttonClickListener);
-        button5.setOnClickListener(buttonClickListener);
-        button6.setOnClickListener(buttonClickListener);
-        button7.setOnClickListener(buttonClickListener);
-        button8.setOnClickListener(buttonClickListener);
-        button9.setOnClickListener(buttonClickListener);
-        button10.setOnClickListener(buttonClickListener);
-        button11.setOnClickListener(buttonClickListener);
-        button12.setOnClickListener(buttonClickListener);
-        button13.setOnClickListener(buttonClickListener);
-        navigate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGoogleMapsNavigation(location);
-            }
-        });
-
-
-        reserve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isColorChanged && selectedButton != null) {
-                    if (!isOperator && "RED".equals(selectedButton.getTag())) {
-                        Toast.makeText(cosmos_model.this, "Operator cannot change the red button!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        selectedButton.setBackgroundColor(Color.YELLOW);
-                        isColorChanged = true;
-                        saveButtonState();
-                        scheduleColorChangeReset();
-                    }
-                }
-            }
-        });
-
-    }
-
-    private void saveButtonState() {
-        if (selectedButton != null) {
-            String selectedButtonId = getResources().getResourceEntryName(selectedButton.getId());
-            databaseReference.child("selectedButton").setValue(selectedButtonId);
-            databaseReference.child("color").setValue("YELLOW");
-            databaseReference.child("isColorChanged").setValue(true);
-        }
-    }
-
-    private void restoreButtonState (String selectedButtonId, String color,boolean isChanged){
-        // Reset borders for all buttons
-        deselectPreviousButton();
-        @SuppressLint("DiscouragedApi")int resId = getResources().getIdentifier(selectedButtonId, "id", getPackageName());
-        selectedButton = findViewById(resId);
-        if (selectedButton != null) {
-            selectedButton.setBackgroundResource(R.drawable.yes_border);
-            if (color.equals("YELLOW")) {
-                selectedButton.setBackgroundColor(Color.YELLOW);
-            }else if(color.equals("RED")){
-                selectedButton.setBackgroundColor(Color.RED);
-            }else{
-                selectedButton.setBackgroundColor(Color.TRANSPARENT);
-            }
-        }
-        isColorChanged = isChanged;
-    }
-    private void scheduleColorChangeReset() {
-        if (resetColorChangedTask != null) {
-            handler.removeCallbacks(resetColorChangedTask);
+        // Assign click listeners to all parking space buttons
+        for (Button button : buttons) {
+            button.setOnClickListener(buttonClickListener);
         }
 
-        // to reset the flag and allow selection
-        resetColorChangedTask = new Runnable() {
-            @Override
-            public void run() {
-                isColorChanged = false; // Reset the flag
-                deselectPreviousButton(); // Deselect the button
-                databaseReference.child("isColorChanged").setValue(false);
-            }
-        };
-        handler.postDelayed(resetColorChangedTask, 15000);//15sec
-    }
-    private void deselectPreviousButton() {
-        if (selectedButton != null) {
-            selectedButton.setBackgroundResource(R.drawable.no_border);
-            selectedButton.setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
-    //location
-    private void openGoogleMapsNavigation(String location) {
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + location);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-
-        PackageManager packageManager = getPackageManager();
-        if (mapIntent.resolveActivity(packageManager) != null) {
-            startActivity(mapIntent);
-        } else {
-            // redirect to Google Play Store
-            Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.apps.maps"));
-            if (playStoreIntent.resolveActivity(packageManager) != null) {
-                startActivity(playStoreIntent);
+        // Handle reservation updates
+        reserveButton.setOnClickListener(v -> {
+            if (selectedButton != null && !isColorChanged) {
+                selectedButton.setBackgroundTintList(ColorStateList.valueOf(Color.YELLOW)); // Mark as reserved
+                selectedButton.setTag("yellow");
+                updateFirebaseState(selectedButton.getId(), "yellow");
+                isColorChanged = true; // Prevent multiple reservations
+                resetColorChangedFlag();
             } else {
-                Toast.makeText(cosmos_model.this, "Unable to open Play Store", Toast.LENGTH_SHORT).show();
+                Toast.makeText(cosmos_model.this, "No space selected or already reserved!", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // Handle navigation button to open Google Maps
+        navigateButton.setOnClickListener(v -> {
+            Uri gmmIntentUri = Uri.parse("geo:" + LOCATION + "?q=" + LOCATION + "(Cosmos College)");
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(mapIntent);
+            } else {
+                Toast.makeText(cosmos_model.this, "Google Maps app is not installed.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateFirebaseState(int buttonId, String color) {
+        String buttonIdStr = getResources().getResourceEntryName(buttonId); // Convert button ID to string
+        databaseReference.child(buttonIdStr).child("color").setValue(color); // Update color in Firebase
+    }
+
+    private void updateButtonState(String buttonId, String color) {
+        int resId = getResources().getIdentifier(buttonId, "id", getPackageName());
+        Button button = findViewById(resId);
+
+        if (button != null) {
+            int colorValue = Color.TRANSPARENT; // Default color
+            if ("green".equals(color)) {
+                colorValue = Color.GREEN;
+            } else if ("red".equals(color)) {
+                colorValue = Color.RED;
+            } else if ("yellow".equals(color)) {
+                colorValue = Color.YELLOW;
+            }
+
+            button.setBackgroundTintList(ColorStateList.valueOf(colorValue)); // Apply color tint
+            button.setTag(color);
+        } else {
+            Log.e("UpdateButtonColor", "Button with ID " + buttonId + " not found");
         }
+    }
+
+    private void resetColorChangedFlag() {
+        handler.postDelayed(() -> isColorChanged = false, 5000); // Reset flag after 5 seconds
     }
 }
